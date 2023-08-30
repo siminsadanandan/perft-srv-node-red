@@ -1,0 +1,256 @@
+[
+    {
+        "id": "5f18971845e8f461",
+        "type": "http in",
+        "z": "20e7c1489e4f8962",
+        "name": "[post]register",
+        "url": "/register",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "ddfc065648685d9a"
+            ]
+        ]
+    },
+    {
+        "id": "ddfc065648685d9a",
+        "type": "exec",
+        "z": "20e7c1489e4f8962",
+        "command": "/data/action-handler.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "5",
+        "winHide": false,
+        "oldrc": false,
+        "name": "command-server",
+        "x": 370,
+        "y": 120,
+        "wires": [
+            [
+                "d9c1303bf4bd5f1a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d9c1303bf4bd5f1a",
+        "type": "http response",
+        "z": "20e7c1489e4f8962",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 600,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "44f4d1937955e295",
+        "type": "http in",
+        "z": "20e7c1489e4f8962",
+        "name": "[get]getstatus",
+        "url": "/getstatus",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "202c3d0be4507e0a"
+            ]
+        ]
+    },
+    {
+        "id": "202c3d0be4507e0a",
+        "type": "file in",
+        "z": "20e7c1489e4f8962",
+        "name": "read agent reg file",
+        "filename": "/data/agent.on",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "a3b1509b10a7de43"
+            ]
+        ]
+    },
+    {
+        "id": "a3b1509b10a7de43",
+        "type": "http response",
+        "z": "20e7c1489e4f8962",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 600,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "039ba6b87ef35a3d",
+        "type": "http in",
+        "z": "20e7c1489e4f8962",
+        "name": "[put]reset",
+        "url": "/reset",
+        "method": "put",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "f5b5f3e9dcbffb7d"
+            ]
+        ]
+    },
+    {
+        "id": "f5b5f3e9dcbffb7d",
+        "type": "file",
+        "z": "20e7c1489e4f8962",
+        "name": "delete agent file",
+        "filename": "/data/agent.on",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "3e7f3291bedcfb0f"
+            ]
+        ]
+    },
+    {
+        "id": "3e7f3291bedcfb0f",
+        "type": "http response",
+        "z": "20e7c1489e4f8962",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 600,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "24cc4a904228d98b",
+        "type": "http in",
+        "z": "20e7c1489e4f8962",
+        "name": "[get]ready?count=n&timeout=y",
+        "url": "/ready",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 250,
+        "y": 420,
+        "wires": [
+            [
+                "1323fb4cb9ef480c"
+            ]
+        ]
+    },
+    {
+        "id": "2e2b641d6bb8b389",
+        "type": "exec",
+        "z": "20e7c1489e4f8962",
+        "command": "/data/polling-handler.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "command-server",
+        "x": 450,
+        "y": 540,
+        "wires": [
+            [
+                "3da19c9b69017a8d"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1323fb4cb9ef480c",
+        "type": "function",
+        "z": "20e7c1489e4f8962",
+        "name": "convert param to arg",
+        "func": "var msgstring = msg.req.query.count + \" \" + msg.req.query.timeout\nmsg.payload = msgstring;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 480,
+        "wires": [
+            [
+                "2e2b641d6bb8b389"
+            ]
+        ]
+    },
+    {
+        "id": "3da19c9b69017a8d",
+        "type": "http response",
+        "z": "20e7c1489e4f8962",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 640,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "dfc339dfe436d57f",
+        "type": "comment",
+        "z": "20e7c1489e4f8962",
+        "name": "",
+        "info": "Check agent checkin with expected agent count and max polling timeout as query params\ncurl -X GET http://localhost:1880/ready\\?count\\=2\\&timeout\\=60",
+        "x": 140,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e4c1204f25613950",
+        "type": "comment",
+        "z": "20e7c1489e4f8962",
+        "name": "",
+        "info": "Agent registration checkin\ncurl -X POST  -H \"Content-type: text/plain\" http://localhost:1880/register -d '10.15.105.31'",
+        "x": 140,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a66c6e079fc2a8a4",
+        "type": "comment",
+        "z": "20e7c1489e4f8962",
+        "name": "",
+        "info": "Agent all checkin status\ncurl -X GET -H \"Content-type: text/plain\" http://localhost:1880/getstatus",
+        "x": 140,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1da29a1a04521fa2",
+        "type": "comment",
+        "z": "20e7c1489e4f8962",
+        "name": "",
+        "info": "Reset all agent checking\ncurl -X PUT  http://localhost:1880/reset",
+        "x": 140,
+        "y": 280,
+        "wires": []
+    }
+]
