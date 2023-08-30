@@ -4,4 +4,4 @@ Simple node red based command server for co-ordinating/controlling tasks across 
 
 Repo have docker build script to customize the nodered image with default project/flows, bash script for simple tasks, docker-compose file to run the container. 
 
-_Currenly only support http and APIs don't have any auth_
+_Currenly only support http and APIs don't have any auth support_
